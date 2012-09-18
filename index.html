@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>L-System</title>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>		
+	<script src="application.js" type="text/javascript"></script>	
+	<script src="form.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="reset.css"/>
+	<link rel="stylesheet" type="text/css" href="global.css"/>
+	<link type="text/css" href="./css/ui-lightness/jquery-ui-1.8.7.custom.css" rel="Stylesheet" />			
+	<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-10637742-1']);
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+	</script>	
+</head>
+
+<body>
+
+	<div id="side">
+		<div id="controls">
+			
+			<div id="information">
+				<p>
+				<a href="#" class='remove'>x</a>
+				This is an Lindenmayer System generator written in Javascript and HTML5. For more information on L-systems,
+				look <a href="http://www.biologie.uni-hamburg.de/b-online/e28_3/lsys.html" target="_blank">here</a>.				
+				</p>
+				<p>
+					Upper case letters draw the line, lower case letters move but do not draw. Numbers are variables with no associated action.
+				</p>
+			</div>
+			
+			<h2 class="label">Starting X: <span id="x_value"></span>px</h2>
+			<div id="xpos"></div>
+			
+			<h2 class="label">Starting Y: <span id="y_value"></span>px</h2>
+			<div id="ypos"></div>
+			
+			<h2 class="label">Line Length: <span id='length_value'></span></h2>
+			<div id="length"></div>
+			
+			<h2 class="label">Iteration Depth: <span id='depth_value'></span></h2>
+			<div id="depth"></div>	
+			
+			<h2 class="label">Starting Angle: <span id='start_angle_value'></span></h2>
+			<div id="start_angle"></div>					
+
+			<h2 class="label">Angle Increment: <span id='angle_value'></span></h2>
+			<div>
+				<input type="text" class="text_input" id="angle" value="60"/>
+			</div>
+			
+			<h2 class="label">Starting Axiom</h2>
+			<div>
+				<input type="text" class="text_input" id="starting" value="F"/>				
+			</div>		
+			
+			<h2 class="label header">Rules</h2>
+			<div>
+				<input type="text" class="text_input" id="to_replace" name="to_replace" size="1" maxlength="1"/> >>	
+				<input type="text" class="text_input" id="replace_with" name="replace_with" width="100%"/>			
+			</div>	
+	
+			<button id="add_rule">Add Rule</button>
+			
+			<div>
+				<ul id="rule_list">
+				</ul>
+			</div>
+			<div>	
+				<button id="render">Render</button>
+				<input type="text" id="url" class="text_input"/>
+			</div>
+			
+			<div>
+				<div id="copyright">@2010 Nolan Carroll</div>
+			</div>
+		</div>
+	</div>
+	<div id="wrapper">
+		<canvas id="canvas" height="600", width="600">
+			
+		</canvas>
+	</div>
+
+</body>
+</html>

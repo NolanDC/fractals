@@ -1,0 +1,108 @@
+
+.ui-widget { font-family: Lucida Grande, Lucida Sans, Arial, sans-serif; font-size: 0.9em; }
+
+
+.ui-widget{
+	font-size:.9em !important;
+}
+
+.ui-slider {
+	margin:6px 2px;
+}
+
+.text_input {
+	border:1px solid #CACACA;	
+	font-size:1em;
+	margin: 3px;
+	color: #555;
+}
+
+a {
+	color:gray;
+	text-decoration:none;
+}
+
+a:hover {
+	color:black;
+}
+
+.label {
+	font-size:.9em;
+	margin-top:3px;
+	font-weight:normal;
+}
+
+.header {
+	border-bottom: 1px solid #bbb;
+	margin-bottom:2px;
+	padding-bottom:2px;
+}
+
+#side {
+	background-color:#f5f5f5;
+	width:250px;
+	float:left;
+	font-family:sans-serif, verdana;
+	font-size:.9em;
+}
+
+#information {
+	font-size:.9em;
+	background-color:#FAFFFF;
+	padding:4px;
+	line-height:1.1em;
+}
+
+#information p {
+	padding-bottom:4px;
+}
+
+#copyright {
+	font-style: italic;
+	font-size: .8em;
+	float:right;
+	padding-bottom:3px;
+	color: #999;
+}
+
+#controls {
+	padding:10px;
+}
+
+#wrapper {
+	height:100%;
+	float:right;
+}
+
+#url {
+	width:120px;
+}
+
+.remove, .edit {
+	float: right;
+	text-decoration: none;
+	color: gray;
+	margin-left: 5px;
+}
+
+.remove:hover, .edit:hover {
+	color:black;
+}
+
+
+.rule {
+	border: 1px solid #ddd;
+	padding:2px;
+	background-color:#fcfcfc;
+	margin-bottom:2px;
+	line-height:1.1em;
+	font-size: .9em;
+}
+
+.rule div{
+	padding:2px;
+}
+
+.replace {
+	background-color:#f5f5f5;	
+}
