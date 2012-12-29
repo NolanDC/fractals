@@ -3,16 +3,31 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>L-System</title>
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>		
-	<script src="application.js" type="text/javascript"></script>	
-	<script src="form.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="reset.css"/>
-	<link rel="stylesheet" type="text/css" href="global.css"/>
-	<link type="text/css" href="./css/ui-lightness/jquery-ui-1.8.7.custom.css" rel="Stylesheet" />			
-	<script type="text/javascript">
+	<title>Lindenmayer System Generator</title>
 
+	<script id="rule_template" type="text/x-handlebars-template">
+		<div class="rule">
+			<div class="actions">
+				<a href="#" class="edit">edit</a>
+				<a href="#" class="remove">remove</a>
+			</div>
+			<span class="replace">{{replace}}</span> <span class="with">{{rwith}}</span>
+		</div>
+	</script>
+
+	<link rel="stylesheet/less" type="text/css" href="css/reset.less"/>
+	<link rel="stylesheet/less" type="text/css" href="css/global.less"/>
+	<link rel="stylesheet" type="text/css" href="./css/ui-lightness/jquery-ui.min.css"/>
+
+	<script type="text/javascript" src="js/lib/jquery.js"></script>
+	<script type="text/javascript" src="js/lib/jquery-ui.min.js"></script>		
+	<script type="text/javascript" src="js/lib/less.js"></script>
+	<script type="text/javascript" src="js/lib/queryables.js"></script>		
+	<script type="text/javascript" src="js/lib/handlebars.js"></script>
+	<script type="text/javascript" src="js/app/application.js"></script>	
+	<script type="text/javascript" src="js/app/form.js"></script>
+			
+	<script type="text/javascript">
 	  var _gaq = _gaq || [];
 	  _gaq.push(['_setAccount', 'UA-10637742-1']);
 	  _gaq.push(['_trackPageview']);
@@ -22,70 +37,151 @@
 	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 	  })();
+	</script>
 
-	</script>	
 </head>
 
 <body>
+	<div id="splash">
+		<div class="content">
+			<div id="title">
+				<div>Lindenmayer System Generator</div>
+			</div>
+			<div id="description">
+				<div>
+					Lindenmayer Systems (L-Systems) are fractals created by a set of replacement rules. To see them in action, choose an example below. Then make your own by changing the starting parameters.
+				</div> 
+			</div>
+			<div id="examples">
+				<li>
+					<a href="./?x=585&y=268&l=4&d=4&sa=60&a=60&s=F&r=A,-F+AA++A+F--F-A,F,F+A++A-F--FF-A+">
+						<div class="image">
+							<img src="images/koch_snowflake.png"></img>
+						</div>
+						<div class="text">
+							<div class="name">Koch Snowflake</div>
+							<div class="description">It is based on the Koch curve, which appeared in a 1904 paper titled "On a continuous curve without tangents, constructible from elementary geometry." </div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./?x=350&y=200&l=2&d=6&sa=60&a=60&s=A&r=B,A+B+A,A,B-A-B">
+						<div class="image">
+							<img src="images/sierpinski.png"></img>
+						</div>
+						<div class="text">
+							<div class="name">Sierpinski Triangle</div>
+							<div class="description">It is based on the Koch curve, which appeared in a 1904 paper titled "On a continuous curve without tangents, constructible from elementary geometry." </div>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="./?x=419&y=327&l=4&d=10&sa=45&a=45&s=F&r=F,+F--F+">
+						<div class="image">
+							<img src="images/levy_c_curve.png"></img>
+						</div>
+						<div class="text">
+							<div class="name">Levy C Curve</div>
+							<div class="description">It is based on the Koch curve, which appeared in a 1904 paper titled "On a continuous curve without tangents, constructible from elementary geometry." </div>
+						</div>
+					</a>
+				</li>
+			</div>
+		</div>
+	</div>
 
 	<div id="side">
-		<div id="controls">
+		<div id="settings">
 			
-			<div id="information">
-				<p>
-				<a href="#" class='remove'>x</a>
-				This is an Lindenmayer System generator written in Javascript and HTML5. For more information on L-systems,
-				look <a href="http://www.biologie.uni-hamburg.de/b-online/e28_3/lsys.html" target="_blank">here</a>.				
-				</p>
-				<p>
-					Upper case letters draw the line, lower case letters move but do not draw. Numbers are variables with no associated action.
-				</p>
+			<div class="setting">
+				<h2>Starting Position</h2>
+				<div class="hint">click on the canvas to set</div>
+				<div class="value">
+					<span id="startx">400</span>, <span id="starty">500</span>
+				</div>
 			</div>
-			
-			<h2 class="label">Starting X: <span id="x_value"></span>px</h2>
-			<div id="xpos"></div>
-			
-			<h2 class="label">Starting Y: <span id="y_value"></span>px</h2>
-			<div id="ypos"></div>
-			
-			<h2 class="label">Line Length: <span id='length_value'></span></h2>
-			<div id="length"></div>
-			
-			<h2 class="label">Iteration Depth: <span id='depth_value'></span></h2>
-			<div id="depth"></div>	
-			
-			<h2 class="label">Starting Angle: <span id='start_angle_value'></span></h2>
-			<div id="start_angle"></div>					
 
-			<h2 class="label">Angle Increment: <span id='angle_value'></span></h2>
-			<div>
-				<input type="text" class="text_input" id="angle" value="60"/>
+			<div class="setting">
+				<h2>Line Length</h2>
+				<div id="length" class="options">
+					<div>1</div>
+					<div class="selected">2</div>
+					<div>3</div>
+					<div>4</div>
+					<div>5</div>
+					<div>6</div>
+					<div>7</div>
+					<div>8</div>
+
+				</div>
+			</div>
+
+			<div class="setting">
+				<h2>Replacement Iterations</h2>
+				<div id="iterations" class="options">
+					<div>3</div>
+					<div class="selected">4</div>
+					<div>5</div>
+					<div>6</div>
+					<div>7</div>
+					<div>8</div>
+					<div>9</div>
+					<div>10</div>
+				</div>
 			</div>
 			
-			<h2 class="label">Starting Axiom</h2>
-			<div>
-				<input type="text" class="text_input" id="starting" value="F"/>				
-			</div>		
-			
-			<h2 class="label header">Rules</h2>
-			<div>
-				<input type="text" class="text_input" id="to_replace" name="to_replace" size="1" maxlength="1"/> >>	
-				<input type="text" class="text_input" id="replace_with" name="replace_with" width="100%"/>			
+			<div class="setting">
+				<h2>Angles</h2>
+				<div>
+					<div class="number">
+						<span class="prefix">starting:</span>
+						<input id="angle" class="focus_select" value="60" type="text" size="3"></input>
+						<span class="label">degrees</span>
+					</div>
+					<div class="number">
+							<span class="prefix">increment:</span> 
+							<input id="increment" class="focus_select" value="60" type="text" size="3"></input>
+							<span class="label">degrees</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="setting">
+				<h2>Starting String</h2>
+				<div class="string">
+					<input id="pattern" value="A" type="text" size="10"></input>
+				</div>
+			</div>
+
+			<div class="setting">
+				<h2>Replacement Rules</h2>
+				<div class="string" id="rule_inputs">
+					<input type="text" class="focus_select" size="1" id="replace"/> <span class="symbol">></span> <input type="text" size="10" id="with"/>
+					<a id="addrule" href="#">+</a>
+				</div>
+				<div class="hint">hover over a rule to edit</div>
+				<div id="rules" class="list">
+					<div class="rule">
+						<div class="actions">
+							<a href="#" class="edit">edit</a>
+							<a href="#" class="remove">remove</a>
+						</div>
+						<span class="replace">A</span> <span class="with">A-B-A</span>
+					</div>
+					<div class="rule">
+						<div class="actions">
+							<a href="#" class="edit">edit</a>
+							<a href="#" class="remove">remove</a>
+						</div>
+						<span class="replace">B</span> <span class="with">B+A+B</span>
+					</div>
+				</div>
 			</div>	
-	
-			<button id="add_rule">Add Rule</button>
-			
+
+				<button id="render" class="btn">Render</button>
+
 			<div>
-				<ul id="rule_list">
-				</ul>
-			</div>
-			<div>	
-				<button id="render">Render</button>
-				<input type="text" id="url" class="text_input"/>
-			</div>
-			
-			<div>
-				<div id="copyright">@2010 Nolan Carroll</div>
+				<span id="copyright">@2010 Nolan Carroll</span>
 			</div>
 		</div>
 	</div>
