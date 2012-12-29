@@ -35,12 +35,21 @@ a {
 	float:left;
 }
 
-#copyright {
-	font-style: italic;
-	font-size: 12px;
-	float:right;
-	padding-right: 8px;
-	color: #999;
+#site_info {
+	a {
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	div {
+		padding: 2px;
+		font-style: italic;
+		font-size: 12px;
+		direction: rtl;
+		padding-right: 8px;
+		color: #999;		
+	}
 }
 
 #controls {
@@ -178,7 +187,7 @@ a {
 				cursor: pointer;
 				width: 12.5%;
 				.box-sizing();
-				padding: 5px;
+				padding: 6px 5px 5px 5px;
 				float: left;
 				text-align: center;
 				&.selected {
@@ -218,6 +227,7 @@ a {
 		}
 		#rule_inputs {
 			overflow: hidden;
+			margin-bottom: 3px;
 			.symbol {
 				display: inline-block;
 				font-size: 20px;
