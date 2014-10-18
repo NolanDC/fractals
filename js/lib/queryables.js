@@ -2,7 +2,10 @@
 Queryables = {
 	getAll: function() {
 		var query = window.location.search.substring(1).replace('/', '')
-			, params = {}
+		return this.fromQueryString(query)
+	},
+	fromQueryString: function(query) {
+		var params = {}
 			, str_params = query.split('&')
 
 		if(query.length==0) {return {}}

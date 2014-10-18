@@ -10,26 +10,27 @@ view = {
 	createFractal: function() {
 		var params = Queryables.getAll()
 
-		if(window.location.search.length == 0) 
-			return
+		if(window.location.search.length == 0) {
+			koch = "x=783&y=432&l=4&d=5&sa=60&a=60&s=F&r=A,-F+AA++A+F--F-A,F,F+A++A-F--FF-A+"
+			params = Queryables.fromQueryString(koch)
+		}
 
-			$('#splash').hide()
-			var readableParams = {
-				x: parseInt(params.x),
-				y: parseInt(params.y),
-				initial: params.s, 
-				rules: params.r.split(','),
-				angleIncrement: parseInt(params.a),
-				angle: parseInt(params.sa),
-				iterations: parseInt(params.d),
-				lineLength: parseInt(params.l)
-			}
+		$('#splash').hide()
+		var readableParams = {
+			x: parseInt(params.x),
+			y: parseInt(params.y),
+			initial: params.s, 
+			rules: params.r.split(','),
+			angleIncrement: parseInt(params.a),
+			angle: parseInt(params.sa),
+			iterations: parseInt(params.d),
+			lineLength: parseInt(params.l)
+		}
 
-			$.extend(fractal, readableParams)
-			view.setFormValues(readableParams)
-			fractal.compute()
-			this.update()
-
+		$.extend(fractal, readableParams)
+		view.setFormValues(readableParams)
+		fractal.compute()
+		this.update()
 	},
 
 	update: function() {
@@ -99,6 +100,16 @@ view = {
 			$('#rules').append(view.templates.rule_template(context))
 		}
 		$('#replace, #with').val('')
+	},
+
+	setIterationDepth: function() {
+		var depth = $('#iterations .selected').text() * 1
+			, $setting = $('#iterations').parent('.setting')
+		if(depth > 7)  {
+			$setting.addClass('warning')
+		} else {
+			$setting.removeClass('warning')
+		}
 	},
 
 	templates: {
