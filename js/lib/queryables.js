@@ -12,7 +12,9 @@ Queryables = {
 			
 		for(var i = 0; i < str_params.length; i++) {
 			var pair = str_params[i].split('=')
-			params[pair[0]] = pair[1]
+			var key = decodeURIComponent(pair[0])
+			var value = decodeURIComponent(pair[1])
+			params[key] = value
 		}
 		return params
 	},
